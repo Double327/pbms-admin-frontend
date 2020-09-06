@@ -21,7 +21,7 @@
 import {AppMain, Navbar, Sidebar, TagsView} from './components'
 
 export default {
-  name: "index",
+  name: "Layout",
   components: {AppMain, TagsView, Navbar, Sidebar}
 }
 </script>
