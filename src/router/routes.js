@@ -6,6 +6,12 @@ Vue.use(Router);
 
 export const routes = [
     {
+        path: '/test',
+        component: () => import('@/view/test'),
+        meta: {title: '测试'},
+        hidden: false
+    },
+    {
         path: '/login',
         component: () => import('@/view/login'),
         meta: {title: '登录'},
@@ -34,7 +40,7 @@ export const routes = [
             },
         ]
     }
-]
+];
 export default new Router({
     mode: 'history',
     scrollBehavior: () => ({y: 0}),

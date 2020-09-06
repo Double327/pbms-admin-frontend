@@ -1,12 +1,10 @@
 <template>
   <div v-if="!item.hidden" class="menu-wrapper">
-    <template v-if="hasChild(item)">
+    <el-menu-item v-if="!hasChild(item)">
       <app-link :to="resolvePath(item.path)">
-        <el-menu-item :index="resolvePath(item.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :title="item.meta.title" :icon="item.meta.icon"/>
-        </el-menu-item>
+        <item :title="item.meta.title" :icon="item.meta.icon"/>
       </app-link>
-    </template>
+    </el-menu-item>
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
@@ -41,7 +39,7 @@ export default {
       type: Object,
       required: true
     },
-    isNest:{
+    isNest: {
       type: Boolean,
       default: false
     },
@@ -52,13 +50,10 @@ export default {
   },
   methods: {
     hasChild(item) {
-      console.log(item);
-      console.log(item.meta.title);
-      console.log(!item.children);
-      if (!item.children) {
+      if (item.children === null) {
         return false;
       }
-      return item.children.length === 0;
+      return item.children.length !== 0;
     },
     resolvePath(routePath) {
       if (isExternal(routePath)) {
