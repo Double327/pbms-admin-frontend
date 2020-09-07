@@ -19,6 +19,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         const code = response.data.code;
+        console.log(response.data);
         if (code < 200 || code > 300) {
             Notification.error({
                 title: response.data.msg
