@@ -15,7 +15,7 @@
           :key="child.path"
           :item="child"
           :is-nest="true"
-          :base-path="item.path"
+          :base-path="resolvePath(item.path)"
           class="nest-menu"
       />
     </el-submenu>
@@ -62,7 +62,6 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      console.log(path.resolve(this.basePath, routePath));
       return path.resolve(this.basePath, routePath);
     }
   }
