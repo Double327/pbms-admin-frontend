@@ -1,5 +1,6 @@
 import {getRoutes} from "@/api/menu";
 import Layout from '@/layout/index';
+import {routesConfig} from '@/router/routes';
 
 const permission = {
     state: {
@@ -8,7 +9,8 @@ const permission = {
     },
     mutations: {
         SET_ROUTES: (state, routes) => {
-            state.routes = routes;
+            state.addRoutes = routes;
+            state.routes = routesConfig.concat(routes);
         }
     },
     actions: {
@@ -41,8 +43,8 @@ function filterAsyncRouter(asyncRouterMap) {
     })
 }
 
-export const loadView = (view) => { // 路由懒加载
-    return () => Promise.resolve(require(`@/view/${view}`).default)
-}
+export const loadView = (view) => {
+    return resolve=>(require([`@/view/${view}`],resolve))
+};
 
 export default permission;

@@ -1,21 +1,23 @@
 <template>
-  <div v-if="!item.hidden" class="menu-wrapper">
-    <el-menu-item v-if="!hasChild(item)">
-      <app-link :to="resolvePath(item.path)">
-        <item :title="item.meta.title" :icon="item.meta.icon"/>
+  <div v-if="!item.hidden">
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
+        </el-menu-item>
       </app-link>
-    </el-menu-item>
+    </template>
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title"/>
+        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
       <sidebar-item
           v-for="child in item.children"
           :key="child.path"
-          :item="child"
           :is-nest="true"
-          :base-path="resolvePath(item.path)"
+          :item="child"
+          :base-path="resolvePath(child.path)"
           class="nest-menu"
       />
     </el-submenu>
@@ -23,18 +25,16 @@
 </template>
 
 <script>
-import path from "path";
-import {isExternal} from "@/utils/validate";
-import Item from "@/layout/components/Sidebar/Item";
-import AppLink from "@/layout/components/Sidebar/Link";
+import path from 'path'
+import { isExternal } from '@/utils/validate'
+import Item from './Item'
+import AppLink from './Link'
 
 export default {
-  name: "SidebarItem",
-  components: {
-    Item,
-    AppLink
-  },
+  name: 'SidebarItem',
+  components: { Item, AppLink },
   props: {
+    // route object
     item: {
       type: Object,
       required: true
@@ -48,12 +48,37 @@ export default {
       default: ''
     }
   },
+  data() {
+    this.onlyOneChild = null
+    return {}
+  },
   methods: {
-    hasChild(item) {
-      if (item.children === null) {
-        return false;
+    hasOneShowingChild(children = [], parent) {
+      if (!children) {
+        children = [];
       }
-      return item.children.length !== 0;
+      const showingChildren = children.filter(item => {
+        if (item.hidden) {
+          return false
+        } else {
+          // Temp set(will be used if only has one showing child)
+          this.onlyOneChild = item
+          return true
+        }
+      });
+
+      // When there is only one child router, the child router is displayed by default
+      if (showingChildren.length === 1) {
+        return true
+      }
+
+      // Show parent if there are no child router to display
+      if (showingChildren.length === 0) {
+        this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        return true
+      }
+
+      return false
     },
     resolvePath(routePath) {
       if (isExternal(routePath)) {
@@ -62,12 +87,8 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath);
+      return path.resolve(this.basePath, routePath)
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -4,12 +4,12 @@ import Layout from '@/layout';
 
 Vue.use(Router);
 
-export const routes = [
+export const routesConfig = [
     {
-        path: '/test',
-        component: () => import('@/view/test'),
-        meta: {title: '测试'},
-        hidden: false
+        path: '/index',
+        hidden: false,
+        meta: {title: '首页', icon: 'dashboard', noCache: true, affix: true},
+        redirect: 'home'
     },
     {
         path: '/login',
@@ -30,19 +30,27 @@ export const routes = [
     {
         path: '',
         component: Layout,
-        redirect: 'index',
+        redirect: 'home',
         children: [
             {
-                path: 'index',
+                path: 'home',
                 component: () => import('@/view/index'),
                 name: '首页',
-                meta: {title: '首页', icon: 'dashboard', noCache: true, affix: true}
+                meta: {title: '首页', icon: 'dashboard', noCache: true, affix: true},
+                hidden: true
             },
-        ]
-    }
+        ],
+        hidden: true
+    },
+    {
+        path: '/test',
+        component: () => import('@/view/test'),
+        meta: {title: '测试'},
+        hidden: false
+    },
 ];
 export default new Router({
     mode: 'history',
     scrollBehavior: () => ({y: 0}),
-    routes
+    routes: routesConfig
 });

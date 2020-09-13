@@ -1,12 +1,10 @@
 <template>
-  <div class="">
-    登录日志
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
-  name: "LoginLog"
+  name: "Log"
 }
 </script>
 

@@ -1,12 +1,12 @@
 <template>
   <div class="">
-    用户管理
+    登录日志
   </div>
 </template>
 
 <script>
 export default {
-  name: "User"
+  name: "LoginLog"
 }
 </script>
 
