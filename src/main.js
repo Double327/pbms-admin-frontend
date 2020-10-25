@@ -9,14 +9,18 @@ import 'normalize.css/normalize.css';
 import '@/assets/style/index.scss';
 import store from "@/store";
 import VueCookies from 'vue-cookies';
+import {parseTime} from "@/utils/timeUtils";
 
 
 Vue.use(ElementUI);
 Vue.use(VueCookies);
 Vue.config.productionTip = false
 
+
+Vue.prototype.parseTime = parseTime;
+
 new Vue({
-  render: h => h(App),
-  router,
-  store
+    render: h => h(App),
+    router,
+    store
 }).$mount('#app')
