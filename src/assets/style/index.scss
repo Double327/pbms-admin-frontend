@@ -1,5 +1,7 @@
-@import "variables";
-@import "sidebar";
+@import './variables.scss';
+@import './mixin.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
 
 body {
   height: 100%;
@@ -148,11 +150,11 @@ aside {
   }
 
   &.draft {
-    border-bottom: 1px dashed #8197c1
+    border-bottom:1px dashed #8197c1
   }
 
   &.publish {
-    border-bottom: 1px dashed #d0d0d0
+    border-bottom:1px dashed #d0d0d0
   }
 }
 
@@ -185,11 +187,24 @@ aside {
   z-index: 1000 !important;
 }
 
+#el-login-footer {
+  height: 40px;
+  line-height: 40px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-family: Arial;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+/**登录页面的footer*/
 #el-main-footer {
   background: none repeat scroll 0 0 white;
   border-top: 1px solid #e7eaec;
   overflow: hidden;
-  padding: 10px 6px 0 6px;
+  padding: 10px 6px 0px 6px;
   height: 33px;
   font-size: 0.7rem !important;
   color: #7a8b9a;

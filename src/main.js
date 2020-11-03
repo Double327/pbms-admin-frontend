@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Cookies from 'js-cookie';
 import router from '@/router/routes'
 import '@/router';
 import ElementUI from 'element-ui';
@@ -12,7 +13,9 @@ import VueCookies from 'vue-cookies';
 import {parseTime} from "@/utils/timeUtils";
 
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {
+    size: Cookies.get('size') || 'medium'
+});
 Vue.use(VueCookies);
 Vue.config.productionTip = false
 

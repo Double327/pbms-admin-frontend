@@ -1,17 +1,18 @@
 <template>
-  <div v-if="!item.hidden">
-    <template
-        v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+  <div v-if="!item.hidden" class="menu-wrapper">
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title"/>
+          <SvgIcon :icon-class="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"/>
+          <span slot="title">{{onlyOneChild.meta.title}}</span>
         </el-menu-item>
       </app-link>
     </template>
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title"/>
+        <SvgIcon :icon-class="item.meta && item.meta.icon"/>
+        <span slot="title">{{item.meta.title}}</span>
       </template>
       <sidebar-item
           v-for="child in item.children"
@@ -28,12 +29,12 @@
 <script>
 import path from 'path'
 import {isExternal} from '@/utils/validate'
-import Item from './Item'
 import AppLink from './Link'
+import SvgIcon from '@/components/SvgIcon/index';
 
 export default {
   name: 'SidebarItem',
-  components: {Item, AppLink},
+  components: {AppLink, SvgIcon},
   props: {
     // route object
     item: {

@@ -27,13 +27,11 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "Sidebar",
-  data() {
-    return {}
-  },
   components: {SidebarItem, Logo},
   computed: {
     ...mapGetters([
-      'permission_routes'
+      'permission_routes',
+      'sidebar'
     ]),
     activeMenu() {
       const route = this.$route;
@@ -45,7 +43,7 @@ export default {
       return path
     },
     isCollapse() {
-      return this.$store.getters.sidebarCollapse;
+      return !this.sidebar.opened;
     },
     showLogo() {
       return this.$store.getters.sidebarLogo;

@@ -42,12 +42,6 @@ export const routesConfig = [
         ],
         hidden: true
     },
-    {
-        path: '/test',
-        component: () => import('@/view/test'),
-        meta: {title: '测试'},
-        hidden: false
-    },
 ];
 export default new Router({
     mode: 'history',

@@ -43,11 +43,10 @@
 
 <script>
 import AppLink from "@/layout/components/Sidebar/Link";
-import Item from "@/layout/components/Sidebar/Item";
 
 export default {
   name: "test",
-  components: {AppLink, Item}
+  components: {AppLink}
 }
 </script>
 
