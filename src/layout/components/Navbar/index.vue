@@ -3,6 +3,24 @@
     <!-- 展开关闭侧边导航图标 -->
     <hamburger id="hamburger-container" :is-active="true" class="hamburger-container"
                @toggleClick="toggleSideBar"/>
+    <div class="right-menu">
+      <template>
+        <el-tooltip content="搜索" effect="dark" placement="bottom">
+        </el-tooltip>
+      </template>
+
+      <el-dropdown class="avatar-container right-menu-item">
+        <div class="avatar-wrapper">
+          <img :src="require('@/assets/avatar/lm_10.jpg')" alt=""/>
+        </div>
+        <el-dropdown-menu slot="dropdown">
+          <router-link to="/user/profile">
+            <el-dropdown-item>个人中心</el-dropdown-item>
+          </router-link>
+          <el-dropdown-item>退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
@@ -54,6 +72,10 @@ export default {
     cursor: pointer;
     transition: background .3s;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .right-menu {
+    float: right;
   }
 }
 </style>
